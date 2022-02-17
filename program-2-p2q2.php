@@ -17,18 +17,25 @@ $buf = socket_read($msgsock, 2048);
 echo "Received message: $buf\n";
 
 
+// Using the JSON Decode method to decode the JSON object
 $buf = json_decode($buf);
 print_r($buf);
+// Accessing the encrypted JSON object
 $encryptedData = $buf->object->encryptedData;
+// Accessing the IV key
 $iv = $buf->object->iv;
+// Decrypting the encrypted data using the key
 $array = openssl_decrypt(base64_decode($encryptedData), "AES-128-CBC", "passphrase", $options=OPENSSL_RAW_DATA, base64_decode($iv));
 
 
+// Decoding the decrypted data that is JSON
 $jsonArray = json_decode($array);
+// Accessing the JSON object
 $json = $jsonArray->object->json;
 $key = $jsonArray->object->key;
 $hashedJson = $jsonArray->object->hashedJson;
 
+// Verifying if the message is authentic
 $response;
 if (hash_hmac('sha256', $json, $key) == $hashedJson) {
     $response = "The message is authentic.\n";

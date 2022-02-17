@@ -20,16 +20,22 @@ echo "Connected to socket.\n";
 // $request .= "Host: localhost\r\n";
 // $request .= "Connection: Close\r\n\r\n";
 
+// JSON string
 $json = '{"name":"John", "age":30}';
+// Key
 $key = 'secret';
+// Hashing the JSON
 $hashedJson = hash_hmac('sha256', $json, $key);
+// Wrapping all three of the data in an array so it can be send once
 $jsonArrayWrapped = array(
     'json' => $json,
     'key' => $key,
     'hashedJson' => $hashedJson
 );
 
+// Naming the array object
 $array = array("object" => $jsonArrayWrapped);
+// Encoding in JSON
 $array = json_encode($array);
 
 echo "Sending the data to program-2 ...";

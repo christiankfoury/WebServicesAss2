@@ -15,11 +15,14 @@ echo "waiting for a message...\n";
 $msgsock = socket_accept($sock);
 $buf = socket_read($msgsock, 2048);
 echo "Received message: $buf\n";
+// Using the JSON Decode method to decode the JSON object
 $jsonArray = json_decode($buf);
+// Accessing the JSON object
 $json = $jsonArray->object->json;
 $key = $jsonArray->object->key;
 $hashedJson = $jsonArray->object->hashedJson;
 
+// Verifying if the message is authentic
 $response;
 if (hash_hmac('sha256', $json, $key) == $hashedJson) {
     $response = "The message is authentic.\n";
