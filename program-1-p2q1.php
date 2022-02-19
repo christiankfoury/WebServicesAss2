@@ -22,7 +22,7 @@ echo "Connected to socket.\n";
 
 // JSON string
 $json = '{"name":"John", "age":30}';
-// Key
+// Key // * THE KEY SHOULD NOT BE SENT *
 $key = 'secret';
 // Hashing the JSON
 $hashedJson = hash_hmac('sha256', $json, $key);

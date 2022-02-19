@@ -18,6 +18,7 @@ echo "Connected to socket.\n";
 
 // JSON object
 $json = '{"name":"John", "age":30}';
+// DONT INCLUDE THE KEY
 $key = 'secret';
 // Hashing the JSON object
 $hashedJson = hash_hmac('sha256', $json, $key);
@@ -31,7 +32,10 @@ $array = array("object" => array(
 // Encoding in JSON to be able to encrypt
 $array = json_encode($array);
 
-// IV Key
+// IV 
+// random number
+// as a seed, it's a random number given to the encryption algorithm so that the encrypted 
+// data be different even for the same given data each time the program is run (each time the data is encrypted)
 $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
 $iv = openssl_random_pseudo_bytes($ivlen);
 
